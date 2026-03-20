@@ -1,0 +1,9 @@
+set(OBJ_GSP_UTIL_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/Blending.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/EdgeDetection.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/InputParser.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Statistics.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Thin.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Transform.cpp
+    PARENT_SCOPE
+)

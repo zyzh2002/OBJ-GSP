@@ -1,0 +1,6 @@
+set(OBJ_GSP_STITCHING_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/APAP_Stitching.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/NISwGSP_Stitching.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Parameter.cpp
+    PARENT_SCOPE
+)

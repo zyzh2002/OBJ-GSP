@@ -1,0 +1,8 @@
+{
+  "dependencies": [
+    "gflags",
+    "onnxruntime",
+    "vlfeat",
+    "eigen3"
+  ]
+}

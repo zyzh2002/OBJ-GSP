@@ -1,0 +1,6 @@
+set(OBJ_GSP_FEATURE_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/FeatureController.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/ImageData.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/MultiImage.cpp
+    PARENT_SCOPE
+)
