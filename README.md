@@ -1,57 +1,95 @@
-<h1 align = "center">
-OBJ-GSP (AAAI 2025)
-</h1>
+# OBJ-GSP
 
-<p align="center">
-    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/32188">
-        <img alt="AAAI Paper" src="http://img.shields.io/badge/Paper-AAAI-B31B1B.svg">
-    </a>
-    <a href="https://arxiv.org/abs/2402.12677">
-        <img alt="arXiv" src="http://img.shields.io/badge/Full Length Paper-arXiv-orange">
-    </a>
-    <a href="https://huggingface.co/datasets/RussRobin/StitchBench">
-        <img alt="Benchmark" src="https://img.shields.io/badge/🤗%20Benchmark-StitchBench-green">
-    </a>
-    <a href="https://huggingface.co/datasets/RussRobin/Aerial234">
-        <img alt="Benchmark" src="https://img.shields.io/badge/🤗%20Benchmark-Aerial234-blue">
-    </a>
-</p>
+Implementation of the AAAI 2025 paper *Object-level Geometric Structure Preserving for Natural Image Stitching* (Unofficial Port).
 
+This README is rewritten for this fork based on commit history since `98828c91b6db825ec3ec4aad698e03653f319e3a`, with emphasis on required engineering changes.
 
-Official implementation of *AAAI 2025* paper "Object-level Geometric Structure Preserving for Natural Image Stitching".
+## Required Fork Changes (since `98828c9`)
 
-## Install
+1. Migrated from manual `.sln` management to unified CMake builds.
+   - Added top-level and per-module `CMakeLists.txt`.
+   - Split `Debugger/Feature/Mesh/Stitching/Util/sam` into static libraries and linked them centrally.
+   - Why necessary: better maintainability and reproducible Linux/WSL/CI builds.
 
-1. Compile ```Opencv 4.4.0```, ```VLFEAT``` and ```Eigen``` locally.
+2. Added CMake presets and vcpkg manifest workflow.
+   - Added `CMakePresets.json`, `CMakeUserPresets.json`, `vcpkg.json`, and `vcpkg-configuration.json`.
+   - Why necessary: standardized setup and easier onboarding on new machines.
 
-2. Create a new Visual Studio ```.sln```, and add all ```.cpp``` and ```.h``` files into this .sln.
+3. Updated dependency strategy.
+   - vcpkg now manages `gflags`, `vlfeat`, and `eigen3`.
+   - `eigen3` is pinned to `3.4.0` via override.
+   - `onnxruntime` is no longer pulled through manifest and should be provided as a local/system CMake package.
+   - Why necessary: improves dependency resolution reliability across platforms.
 
-3. Set HED file paths in ```EdgeDetection.cpp```.
+4. Refactored linking and enabled OpenMP.
+   - Added `find_package(OpenMP REQUIRED)` in root CMake.
+   - Submodules now use explicit `target_link_libraries` dependencies.
+   - Why necessary: avoids hidden linker issues and ensures parallel-related paths build correctly.
 
-## StitchBench
+5. Cross-platform cleanup (removed Windows-specific artifacts).
+   - Replaced directory creation with `mkdir(path, 0755)` in `Stitching/Parameter.cpp`.
+   - Removed `VlFeat.props` and `vl.dll` from repository.
+   - Removed bundled `dirent.h` and switched to system header usage.
+   - Why necessary: native Linux build compatibility without platform-bound binaries.
 
-StitchBench is by far the most comprehensive image stitching dataset.
-A sample image pair is provided in this GitHub repo at ```./input-data/AANAP-01_skyline```. 
-StitchBench images and download instructions are available at: 
-[HuggingFace](https://huggingface.co/datasets/RussRobin/StitchBench). You will be automatically granted access to it.
+6. Header/include cleanup and formatting fixes.
+   - Adjusted include paths and Eigen geometry-related headers.
+   - Why necessary: reduces compiler-dependent include/symbol issues.
 
-## Aerial234
-Aerial234 is a open-source dataset of 234 aerial images for image stitching.
-We used a drone to continuously scan an area of Southeast University and collected this dataset. 
-It’s quite a challenging dataset, and we’re curious if there’s a method to stitch these 234 aerial images into a single panorama.
+## Environment and Dependencies
 
-Aerial234 is available at: [HuggingFace](https://huggingface.co/datasets/RussRobin/Aerial234).
+- CMake >= 3.22
+- Ninja
+- GCC/G++ (current preset defaults to `gcc-9` / `g++-9`, customizable)
+- OpenCV (4.x recommended)
+- ONNX Runtime (must be discoverable by `find_package(onnxruntime CONFIG REQUIRED)`)
+- vcpkg (for `gflags`, `vlfeat`, `eigen3`)
 
-Our work on aerial image stiching (just a preliminary attempt): 
-[UAV image stitching by estimating orthograph with RGB cameras](https://www.sciencedirect.com/science/article/pii/S1047320323000858).
+## Build (Recommended)
 
-## Segment Anything Model Script
-Run ```.sln``` and you will find 0-original.png in the ```./``` folder.
-Upload the image to Google Colab and run sam.ipynb to get SAM features and put it in ./ folder.
+1. Set vcpkg root:
 
-## Usage
-For any questions, please feel free to open an issue.
+```bash
+export VCPKG_ROOT=/root/vcpkg
 ```
+
+2. Configure:
+
+```bash
+cmake --preset vcpkg
+```
+
+3. Build:
+
+```bash
+cmake --build build -j
+```
+
+4. Run:
+
+```bash
+./build/main
+```
+
+If CMake cannot find OpenCV or ONNX Runtime, compile and install them manually with the `.pc` files or CMake config files properly set up.
+
+## Datasets
+
+1. StitchBench
+   - Sample pair in `./input-data/AANAP-01_skyline`.
+   - Full dataset: https://huggingface.co/datasets/RussRobin/StitchBench
+
+2. Aerial234
+   - Dataset: https://huggingface.co/datasets/RussRobin/Aerial234
+   - Related work: https://www.sciencedirect.com/science/article/pii/S1047320323000858
+
+## SAM Notes
+
+The repository includes `sam/` and `sam.ipynb`. For SAM-related reproduction, ensure ONNX model paths and runtime I/O expectations match your local setup.
+
+## Citation
+
+```bibtex
 @inproceedings{cai2025object,
   title={Object-level geometric structure preserving for natural image stitching},
   author={Cai, Wenxiao and Yang, Wankou},
@@ -63,7 +101,7 @@ For any questions, please feel free to open an issue.
 }
 ```
 
-```
+```bibtex
 @article{cai2023uav,
   title={UAV image stitching by estimating orthograph with RGB cameras},
   author={Cai, Wenxiao and Du, Songlin and Yang, Wankou},
@@ -75,4 +113,4 @@ For any questions, please feel free to open an issue.
 }
 ```
 
-We appreciate AAAI for providing Student Scholarship for this paper!
+If you have questions, feel free to open an issue.
