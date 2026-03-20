@@ -53,12 +53,12 @@ Parameter::Parameter(const string& _file_name) {
 	file_dir = "./input-data/" + _file_name + "/";
 	result_dir = "./input-data/0_results/" + _file_name + "-result/";
 
-	_mkdir("./input-data/0_results/");
-	_mkdir(result_dir.c_str());
+	mkdir("./input-data/0_results/",0755);
+	mkdir(result_dir.c_str(),0755);
 #ifndef DP_NO_LOG
 	debug_dir = "./input-data/1_debugs/" + _file_name + "-result/";
-	_mkdir("./input-data/1_debugs/");
-	_mkdir(debug_dir.c_str());
+	mkdir("./input-data/1_debugs/",0755);
+	mkdir(debug_dir.c_str(),0755);
 #endif
 
 	//stitching_parse_file_name = file_dir + _file_name + "-STITCH-GRAPH.txt";
