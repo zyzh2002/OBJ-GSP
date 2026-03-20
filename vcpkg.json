@@ -1,8 +1,13 @@
 {
   "dependencies": [
     "gflags",
-    "onnxruntime",
     "vlfeat",
     "eigen3"
+  ],
+  "overrides": [
+    {
+      "name": "eigen3",
+      "version": "3.4.0"
+    }
   ]
 }
