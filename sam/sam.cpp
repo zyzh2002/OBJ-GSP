@@ -1,6 +1,6 @@
 #include "sam.h"
 
-#include <onnxruntime_cxx_api.h>
+#include <onnxruntime/onnxruntime_cxx_api.h>
 
 #include <codecvt>
 #include <fstream>
@@ -143,7 +143,7 @@ struct SamModel {
       inputPointValues.push_back((float)point.y);
       inputLabelValues.push_back(0);
     }
-    
+
     if (!roi.empty()) {
       inputPointValues.push_back((float)roi.x);
       inputPointValues.push_back((float)roi.y);
@@ -349,7 +349,7 @@ std::vector<std::vector<cv::Point>> Sam::autoSegmentContour(const cv::Size& numP
             if (maxContourArea < minArea) {
                 continue;
             }
-            
+
             //cv::namedWindow("Contours", cv::WINDOW_AUTOSIZE);
             //cv::Mat contoursImage = cv::Mat::zeros(mask.size(), CV_8UC3);
             //cv::Scalar color(0, 0, 255); // Red color for contours
@@ -369,7 +369,7 @@ std::vector<std::vector<cv::Point>> Sam::autoSegmentContour(const cv::Size& numP
         }
     }
     // points at the edge of images should be eliminated
-    std::vector<std::vector<cv::Point>> centerContours; 
+    std::vector<std::vector<cv::Point>> centerContours;
     int distanceThreshold = 15;
 
     for (auto& contour : objectContours) {

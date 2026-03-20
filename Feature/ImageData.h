@@ -14,7 +14,7 @@
 #include "FeatureController.h"
 #include "../Mesh/MeshGrid.h"
 //#include "../Util/ReadLatALon.h"
-#include <opencv2\imgproc\types_c.h>
+#include <opencv2/imgproc/types_c.h>
 #include "../Util/EdgeDetection.h"
 #include "../Util/Thin.h"
 #include <opencv2/ximgproc.hpp>

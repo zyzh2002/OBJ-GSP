@@ -14,14 +14,14 @@
 #include <vector>
 #include <string>
 #include <set>
-#include "dirent.h" // NOTE: you may have to add dirent.h in project files and change <dirent.h> to "dirent.h". search for this .h file on internet
+#include <dirent.h> // NOTE: you may have to add dirent.h in project files and change <dirent.h> to "dirent.h". search for this .h file on internet
 #include <algorithm>
-#include <direct.h>
+// #include <direct.h>
 using namespace std;
 
 
 #define _USE_MATH_DEFINES
-#include <cmath> 
+#include <cmath>
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -33,7 +33,7 @@ using namespace cv;
 #include <Eigen/SVD>
 #include <Eigen/IterativeLinearSolvers>
 #include <Eigen/Sparse>
-#include <unsupported/Eigen/SparseExtra> 
+#include <unsupported/Eigen/SparseExtra>
 #include "opencv2/dnn.hpp"
 #include <opencv2/dnn/layer.details.hpp>
 using namespace Eigen;
