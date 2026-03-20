@@ -1,9 +1,18 @@
-set(OBJ_GSP_SAM_SOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/sam.cpp
-    PARENT_SCOPE
+add_library(samLib STATIC
+    sam.cpp
 )
 
-set(OBJ_GSP_SAM_TEST_SOURCES
-    ${CMAKE_CURRENT_LIST_DIR}/sam_test.cpp
-    PARENT_SCOPE
+target_include_directories(samLib PUBLIC
+    ${OpenCV_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+
+target_link_libraries(samLib PUBLIC
+    ${OpenCV_LIBS}
+    onnxruntime::onnxruntime
+    Eigen3::Eigen
+    unofficial::vlfeat::vl
+    gflags::gflags
+    debuggerLib
 )
