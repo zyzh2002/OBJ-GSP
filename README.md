@@ -38,6 +38,7 @@ This README is rewritten for this fork based on commit history since `98828c91b6
 
 ## Environment and Dependencies
 
+- Ubuntu 22.04 LTS (container or whatever else)
 - CMake >= 3.22
 - Ninja
 - GCC/G++ (current preset defaults to `gcc-9` / `g++-9`, not guranteed to work with newer versions due to potential C++ grammar changes)
