@@ -40,7 +40,7 @@ This README is rewritten for this fork based on commit history since `98828c91b6
 
 - CMake >= 3.22
 - Ninja
-- GCC/G++ (current preset defaults to `gcc-9` / `g++-9`, customizable)
+- GCC/G++ (current preset defaults to `gcc-9` / `g++-9`, not guranteed to work with newer versions due to potential C++ grammar changes)
 - OpenCV (4.x recommended)
 - ONNX Runtime (must be discoverable by `find_package(onnxruntime CONFIG REQUIRED)`)
 - vcpkg (for `gflags`, `vlfeat`, `eigen3`)
